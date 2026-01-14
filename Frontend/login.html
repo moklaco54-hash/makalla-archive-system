@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نظام أرشيف الوثائق لشركة المكلا</title>
+</head>
+<body>
+
+<h2>تسجيل الدخول</h2>
+
+<input id="u" placeholder="اسم المستخدم"><br><br>
+<input id="p" type="password" placeholder="كلمة المرور"><br><br>
+<button onclick="login()">دخول</button>
+
+<script>
+function login(){
+fetch('/api/auth/login',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({username:u.value,password:p.value})
+})
+.then(r=>{
+ if(r.ok) location.href='dashboard.html';
+ else alert('خطأ في الدخول');
+});
+}
+</script>
+
+</body>
+</html>

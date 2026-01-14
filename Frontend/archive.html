@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الأرشيف</title>
+</head>
+<body>
+
+<h2>الأرشيف</h2>
+
+<input id="title" placeholder="عنوان الوثيقة">
+<input id="cat" placeholder="التصنيف">
+<button onclick="add()">إضافة</button>
+
+<ul id="list"></ul>
+
+<script>
+function load(){
+fetch('/api/documents')
+.then(r=>r.json())
+.then(d=>{
+list.innerHTML='';
+d.forEach(x=>{
+list.innerHTML+=`<li>${x.title} - ${x.category}</li>`;
+});
+});
+}
+
+function add(){
+fetch('/api/documents',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({title:title.value,category:cat.value})
+}).then(load);
+}
+
+load();
+</script>
+
+</body>
+</html>
